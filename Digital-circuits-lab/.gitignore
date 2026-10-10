@@ -1,0 +1,35 @@
+# Compiled files
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+
+# CMake build directories
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+CTestTestfile.cmake
+
+# IDE - CLion / JetBrains
+.idea/
+*.iml
+
+# IDE - Visual Studio Code
+.vscode/
+
+# Debugging files
+core
+core.*
+
+# Operating system files
+.DS_Store
+Thumbs.db
