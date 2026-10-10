@@ -1,7 +1,7 @@
 #ifndef HALF_ADDER_H
 #define HALF_ADDER_H
 
-#include "logic_gat.h"
+#include "../../../logic-gates/logic_gate.h"
 
 typedef struct {
     Bit sum;
