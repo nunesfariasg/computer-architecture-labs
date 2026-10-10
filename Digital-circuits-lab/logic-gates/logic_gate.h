@@ -3,10 +3,10 @@
 
 typedef int Bit;
 
-Bit gat_and(Bit a, Bit b);
-Bit gat_or(Bit a, Bit b);
-Bit gat_not(Bit a);
-Bit gat_xor(Bit a, Bit b);
-Bit gat_nand(Bit a, Bit b);
+Bit gate_and(Bit a, Bit b);
+Bit gate_or(Bit a, Bit b);
+Bit gate_not(Bit a);
+Bit gate_xor(Bit a, Bit b);
+Bit gate_nand(Bit a, Bit b);
 
 #endif
