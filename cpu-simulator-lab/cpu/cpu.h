@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "../memory/memory.h"
+#include "../instruction/instruction.h"
 
 typedef struct {
     uint16_t PC;
@@ -15,7 +16,13 @@ typedef struct {
     Memory memory;
 } CPU;
 
+typedef struct {
+    Opcode opcode;
+    uint16_t operand;
+} DecodedInstruction;
+
 void cpu_init(CPU *cpu);
 void cpu_fetch(CPU *cpu);
+int cpu_decode(const CPU *cpu, DecodedInstruction *decoded);
 
 #endif

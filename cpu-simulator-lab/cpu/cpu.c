@@ -29,3 +29,15 @@ void cpu_fetch(CPU *cpu) {
 
     cpu->PC++;
 }
+
+// Decode the instruction stored in the IR.
+int cpu_decode(const CPU *cpu, DecodedInstruction *decoded) {
+    if (cpu == NULL || decoded == NULL) {
+        return 0;
+    }
+
+    decoded->opcode = instruction_decode_opcode(cpu->IR);
+    decoded->operand = instruction_decode_operand(cpu->IR);
+
+    return 1;
+}
