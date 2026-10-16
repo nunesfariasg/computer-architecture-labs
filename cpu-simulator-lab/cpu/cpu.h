@@ -24,5 +24,6 @@ typedef struct {
 void cpu_init(CPU *cpu);
 void cpu_fetch(CPU *cpu);
 int cpu_decode(const CPU *cpu, DecodedInstruction *decoded);
+int cpu_execute(CPU *cpu, const DecodedInstruction *decoded);
 
 #endif

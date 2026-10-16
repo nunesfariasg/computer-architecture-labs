@@ -41,3 +41,78 @@ int cpu_decode(const CPU *cpu, DecodedInstruction *decoded) {
 
     return 1;
 }
+
+// Execute the decoded instruction.
+int cpu_execute(CPU *cpu, const DecodedInstruction *decoded) {
+    if (cpu == NULL || decoded == NULL || cpu->halted) {
+        return 0;
+    }
+
+    uint16_t operand = decoded->operand;
+
+    switch (decoded->opcode) {
+        case OP_NOP:
+            // Do nothing.
+            break;
+
+        case OP_LOAD:
+            if (operand >= MEMORY_SIZE) {
+                return 0;
+            }
+
+            cpu->ACC = memory_read_data(&cpu->memory, operand);
+            break;
+
+        case OP_STORE:
+            if (operand >= MEMORY_SIZE) {
+                return 0;
+            }
+
+            memory_write_data(&cpu->memory, operand, cpu->ACC);
+            break;
+
+        case OP_ADD:
+            if (operand >= MEMORY_SIZE) {
+                return 0;
+            }
+
+            cpu->ACC += memory_read_data(&cpu->memory, operand);
+            break;
+
+        case OP_SUB:
+            if (operand >= MEMORY_SIZE) {
+                return 0;
+            }
+
+            cpu->ACC -= memory_read_data(&cpu->memory, operand);
+            break;
+
+        case OP_JMP:
+            if (operand >= MEMORY_SIZE) {
+                return 0;
+            }
+
+            cpu->PC = operand;
+            break;
+
+        case OP_JZ:
+            if (cpu->ACC == 0) {
+                if (operand >= MEMORY_SIZE) {
+                    return 0;
+                }
+
+                cpu->PC = operand;
+            }
+            break;
+
+        case OP_HALT:
+            cpu->halted = 1;
+            break;
+
+        default:
+            // Reject unsupported opcodes.
+            return 0;
+    }
+
+    return 1;
+}
