@@ -12,6 +12,7 @@ void cpu_init(CPU *cpu) {
     cpu->IR = 0;
     cpu->ACC = 0;
     cpu->halted = 0;
+    cpu->faulted = 0;
 
     memory_init(&cpu->memory);
 }
@@ -28,6 +29,58 @@ void cpu_fetch(CPU *cpu) {
     );
 
     cpu->PC++;
+}
+
+// Execute one fetch-decode-execute cycle.
+int cpu_step(CPU *cpu) {
+    if (cpu == NULL || cpu->halted || cpu->faulted) {
+        return 0;
+    }
+
+    // Prevent instruction memory out-of-bounds access.
+    if (cpu->PC >= MEMORY_SIZE) {
+        cpu->faulted = 1;
+        return 0;
+    }
+
+    cpu_fetch(cpu);
+
+    DecodedInstruction decoded;
+
+    if (!cpu_decode(cpu, &decoded)) {
+        cpu->faulted = 1;
+        return 0;
+    }
+
+    if (!cpu_execute(cpu, &decoded)) {
+        cpu->faulted = 1;
+        return 0;
+    }
+
+    return 1;
+}
+
+// Run the program until HALT, a fault, or the step limit.
+int cpu_run(CPU *cpu, uint32_t max_steps) {
+    if (cpu == NULL || cpu->faulted) {
+        return 0;
+    }
+
+    uint32_t steps = 0;
+
+    while (!cpu->halted && !cpu->faulted) {
+        if (steps >= max_steps) {
+            return 0;
+        }
+
+        if (!cpu_step(cpu)) {
+            break;
+        }
+
+        steps++;
+    }
+
+    return cpu->halted && !cpu->faulted;
 }
 
 // Decode the instruction stored in the IR.

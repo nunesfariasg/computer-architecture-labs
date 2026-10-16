@@ -12,6 +12,7 @@ typedef struct {
     uint16_t ACC;
 
     int halted;
+    int faulted;
 
     Memory memory;
 } CPU;
@@ -22,6 +23,8 @@ typedef struct {
 } DecodedInstruction;
 
 void cpu_init(CPU *cpu);
+int cpu_run(CPU *cpu, uint32_t max_steps);
+int cpu_step(CPU *cpu);
 void cpu_fetch(CPU *cpu);
 int cpu_decode(const CPU *cpu, DecodedInstruction *decoded);
 int cpu_execute(CPU *cpu, const DecodedInstruction *decoded);
