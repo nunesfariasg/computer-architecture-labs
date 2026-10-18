@@ -11,7 +11,7 @@
 
 # CMake build directories
 build/
-cmake-build-*/
+Digital-circuits-lab/cmake-build-debug/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
