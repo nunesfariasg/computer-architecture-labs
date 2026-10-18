@@ -2,6 +2,7 @@
 
 #include <stddef.h>
 
+// Instance the memory
 void memory_init(Memory *memory) {
     if (memory == NULL) {
         return;
@@ -13,6 +14,7 @@ void memory_init(Memory *memory) {
     }
 }
 
+// Read the struction on the memory
 uint16_t memory_read_instruction(const Memory *memory, uint16_t address) {
     if (memory == NULL || address >= MEMORY_SIZE) {
         return 0;
@@ -21,6 +23,7 @@ uint16_t memory_read_instruction(const Memory *memory, uint16_t address) {
     return memory->instructions[address];
 }
 
+// Write the struction to the memory
 void memory_write_instruction(Memory *memory, uint16_t address, uint16_t instruction) {
     if (memory == NULL || address >= MEMORY_SIZE) {
         return;
@@ -29,6 +32,7 @@ void memory_write_instruction(Memory *memory, uint16_t address, uint16_t instruc
     memory->instructions[address] = instruction;
 }
 
+// Read the data on the memory
 uint16_t memory_read_data(const Memory *memory, uint16_t address) {
     if (memory == NULL || address >= MEMORY_SIZE) {
         return 0;
@@ -37,6 +41,7 @@ uint16_t memory_read_data(const Memory *memory, uint16_t address) {
     return memory->data[address];
 }
 
+// Write the data on the memory
 void memory_write_data(Memory *memory, uint16_t address, uint16_t value) {
     if (memory == NULL || address >= MEMORY_SIZE) {
         return;
